@@ -19,6 +19,7 @@ export async function get_baheth_media_info(
     "REFERENCE_ID",
     encodeURIComponent(reference_id)
   );
+
   const data = await fetch(request_url, {
     headers: {
       Accept: "application/json",
