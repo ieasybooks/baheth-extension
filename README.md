@@ -42,7 +42,7 @@
 <li dir="rtl">نفِّذ الأمر التالي في الطرفية</li>
 
 ```
-npm run build:watch
+    npm run build:watch
 ```
 
 <li dir="rtl">ثبت الإضافة مؤقتاً في المتصفح للاختبار أثناء التطوير
