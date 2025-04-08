@@ -1,4 +1,4 @@
-export function get_clean_youtube_url(url: string) {
+export function get_clean_youtube_url() {
   // match video/playlist id
   const match = location.href.match(/(?:\/watch\?v=|\/playlist\?list=)([^&]+)/);
 
