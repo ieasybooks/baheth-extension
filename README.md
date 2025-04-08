@@ -47,7 +47,7 @@ npm run build:watch
 
 <li dir="rtl">ثبت الإضافة مؤقتاً في المتصفح للاختبار أثناء التطوير
     <ul dir="rtl">
-        <li dir="rtl">افتح المتصفح وانتقل إلى صفحة الإضافات (<code>chrome://extensions/</code>).</li>
+        <li dir="rtl">افتح المتصفح وانتقل إلى صفحة الإضافات (<code dir="ltr">chrome://extensions/</code>).</li>
         <li dir="rtl">فعّل خيار "وضع المطوّر" (Developer mode) الموجود في أعلى الصفحة.</li>
         <li dir="rtl">انقر على زر "تحميل إضافة غير مضغوطة" (Load unpacked) الموجود في أعلى الصفحة.</li>
         <li dir="rtl">في نافذة اختيار الملفات، انتقل إلى مجلد baheth-extension ثم اختر المجلد الفرعي dist واضغط على "تحديد" (Select Folder) أو "موافق" (OK).</li>
