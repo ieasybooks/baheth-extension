@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/chrome-manifest",
+  "manifest_version": 3,
+  "name": "Baheth | باحث",
+  "version": "1.0",
+  "description": "تخبرك إن كان هذا المحتوى متوفراً على منصة باحث أم لا.",
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
