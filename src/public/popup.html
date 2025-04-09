@@ -9,7 +9,16 @@
 </head>
 
 <body dir="rtl">
-    <img src="icons/128.png" height="128px" />
+    <svg class="bg-pattern" aria-hidden="true">
+        <defs>
+            <pattern id="rhombus-pattern" width="50" height="50" patternUnits="userSpaceOnUse">
+                <path d="M25,0 L50,25 L25,50 L0,25 Z" fill="none"></path>
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#rhombus-pattern)"></rect>
+    </svg>
+
+    <img class="logo" src="baheth-logo-dark.svg" height="64px" />
     <div class="options-list">
         <h4 class="list-title">الخيارات</h4>
         <label>
