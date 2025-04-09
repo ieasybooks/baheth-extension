@@ -28,6 +28,11 @@ p {
     margin: 0;
 }
 
+img {
+    user-select: none;
+    pointer-events: none;
+}
+
 /* Background pattern */
 .bg-pattern {
     stroke: rgb(223, 223, 223);
