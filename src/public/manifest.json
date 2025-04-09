@@ -22,5 +22,10 @@
   "action": {
     "default_popup": "popup.html"
   },
-  "permissions": ["storage"]
+  "permissions": ["storage"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "baheth@ieasybooks.com"
+    }
+  }
 }
