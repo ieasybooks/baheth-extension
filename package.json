@@ -7,8 +7,8 @@
     "build:watch": "tsup --watch"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "iEasyBooks",
+  "license": "MIT",
   "devDependencies": {
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
