@@ -1,7 +1,6 @@
 {
   "name": "baheth-extension",
   "version": "1.0.0",
-  "description": "",
   "scripts": {
     "build": "tsup",
     "build:watch": "tsup --watch"
