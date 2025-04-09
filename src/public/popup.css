@@ -125,3 +125,7 @@ img {
     right: calc(100% - 26px);
     background-color: rgb(255, 255, 255);
 }
+
+.options-list, .list-title, .toggle-option {
+    direction: rtl;
+}
