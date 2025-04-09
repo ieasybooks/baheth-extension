@@ -9,6 +9,7 @@
   "author": "iEasyBooks",
   "license": "MIT",
   "devDependencies": {
+    "@types/chrome": "^0.0.313",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
   }

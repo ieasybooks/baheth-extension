@@ -4,13 +4,6 @@
   "name": "Baheth - باحث",
   "version": "1.0",
   "description": "تخبرك إن كان المقطع الذي تشاهده متاحاً على منصة باحث.",
-  "content_scripts": [
-    {
-      "matches": ["https://www.youtube.com/*"],
-      "js": ["content.js"],
-      "css": ["styles.css"]
-    }
-  ],
   "icons": {
     "16": "icons/16.png",
     "32": "icons/32.png",
@@ -18,5 +11,16 @@
     "64": "icons/64.png",
     "128": "icons/128.png",
     "256": "icons/256.png"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["storage"]
 }
