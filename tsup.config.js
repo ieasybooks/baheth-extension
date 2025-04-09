@@ -6,6 +6,7 @@ export default defineConfig((options) => ({
   sourcemap: false,
   entry: {
     content: "src/content.ts",
+    popup: "src/popup.ts",
   },
   publicDir: "src/public/",
   dts: false,

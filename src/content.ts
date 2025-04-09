@@ -1,5 +1,6 @@
 import { get_baheth_media_info } from "./lib/api";
 import { init_location_observer } from "./lib/observer";
+import { get_settings } from "./lib/storage";
 import { delete_all_toasts, show_toast } from "./lib/toast";
 import { get_clean_youtube_url } from "./lib/url";
 
@@ -15,8 +16,16 @@ async function detect_baheth_media() {
   const baheth_data = await get_baheth_media_info(clean_url);
   if (!baheth_data?.link) return;
 
+  // get extension settings
+  const settings = await get_settings();
+
   // if it exists on baheth, show a toast
-  show_toast(baheth_data.link);
+  // or if auto-redirect is enabled, redirect to baheth.
+  if (settings.auto_redirect) {
+    window.location.href = baheth_data.link;
+  } else {
+    show_toast(baheth_data.link);
+  }
 }
 
 // initialize location observer
