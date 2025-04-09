@@ -31,7 +31,7 @@ async function detect_baheth_media() {
   if (settings.auto_redirect) {
     window.location.href = baheth_data.link;
   } else {
-    show_toast(baheth_data.link);
+    show_toast(baheth_data.link, page_type);
   }
 }
 
