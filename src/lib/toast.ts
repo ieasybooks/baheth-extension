@@ -1,10 +1,12 @@
-export function show_toast(baheth_link) {
+export function show_toast(baheth_link, type: "video" | "playlist") {
   // create toast element
   const toast = document.createElement("div");
   toast.classList.add("baheth-toast");
   toast.innerHTML = `
-    <p class="toast-title">هذا المقطع متوفر على باحث! 🔍</p>
-    <p class="toast-description">اضغط لمشاهدته عبر باحث.</p>
+    <p class="toast-title">${
+      type === "video" ? "هذا المقطع متاح" : "قائمة التشغيل هذه متاحة"
+    } على باحث! 🔍</p>
+    <p class="toast-description">اضغط للمشاهدة عبر باحث.</p>
     <button class="close">تجاهل</button>
   `;
 
