@@ -10,7 +10,10 @@
 
 <h2 dir="rtl">تثبيت الإضافة</h2>
 
-<p dir="rtl">تفاصيل التثبيت قريباً إن شاء الله</p>
+<div dir="rtl">
+  <p>يمكن الحصول عليها عبر الضغط على الصورة التالية:<p>
+  <a href="https://chromewebstore.google.com/detail/ijdjnkiocmodojidknkpajajbpghhacl?utm_source=item-share-cb"><img src="./chrome-web-store.png" height="48px" /></a>
+</div>
 
 <h2 dir="rtl">المساهمة في التطوير</h2>
 
