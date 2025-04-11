@@ -10,7 +10,10 @@
 
 <h2>Installation</h2>
 
-<p>Installation details coming soon, Insha'Allah.</p>
+<div>
+  <p>Click the image below to get the extension:<p>
+  <a href="https://chromewebstore.google.com/detail/ijdjnkiocmodojidknkpajajbpghhacl?utm_source=item-share-cb"><img src="./chrome-web-store.png" height="48px" /></a>
+</div>
 
 <h2>Contributing</h2>
 
@@ -67,4 +70,4 @@
 
 <h2>License</h2>
 
-<p>وقف لله تعالى.</p> 
+<p>وقف لله تعالى.</p>
