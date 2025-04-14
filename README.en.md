@@ -1,3 +1,10 @@
+<div align="center">
+
+  [![ar](https://img.shields.io/badge/lang-ar-brightgreen.svg)](README.md)
+  [![en](https://img.shields.io/badge/lang-en-red.svg)](README.en.md)
+
+</div>
+
 <h1>Baheth Browser Extension</h1>
 
 <p>A browser extension that notifies you if the video you are watching is available on the Baheth platform.</p>
@@ -10,10 +17,7 @@
 
 <h2>Installation</h2>
 
-<div>
-  <p>Click the image below to get the extension:<p>
-  <a href="https://chromewebstore.google.com/detail/ijdjnkiocmodojidknkpajajbpghhacl?utm_source=item-share-cb"><img src="./chrome-web-store.png" height="48px" /></a>
-</div>
+<p>You can get the extension from Google Chrome Web Store <a href="https://chromewebstore.google.com/detail/ijdjnkiocmodojidknkpajajbpghhacl">here</a> or from FireFox Add-ons <a href="https://addons.mozilla.org/en-US/firefox/addon/baheth-%D8%A8%D8%A7%D8%AD%D8%AB">here</a>.<p>
 
 <h2>Contributing</h2>
 

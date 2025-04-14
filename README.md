@@ -1,3 +1,10 @@
+<div align="center">
+
+  [![ar](https://img.shields.io/badge/lang-ar-brightgreen.svg)](README.md)
+  [![en](https://img.shields.io/badge/lang-en-red.svg)](README.en.md)
+
+</div>
+
 <h1 dir="rtl">إضافة باحث للمتصفح</h1>
 
 <p dir="rtl">إضافة للمتصفح تنبهك إذا كان المقطع الذي تشاهده متاحًا على منصة باحث</p>
@@ -10,10 +17,7 @@
 
 <h2 dir="rtl">تثبيت الإضافة</h2>
 
-<div dir="rtl">
-  <p>يمكن الحصول عليها عبر الضغط على الصورة التالية:<p>
-  <a href="https://chromewebstore.google.com/detail/ijdjnkiocmodojidknkpajajbpghhacl?utm_source=item-share-cb"><img src="./chrome-web-store.png" height="48px" /></a>
-</div>
+<p dir="rtl">يمكن الحصول على الإضافة من متجر إضافات متصفح Google Chrome من <a href="https://chromewebstore.google.com/detail/ijdjnkiocmodojidknkpajajbpghhacl">هنا</a> أو من متجر إضافات متصفح FireFox من <a href="https://addons.mozilla.org/en-US/firefox/addon/baheth-%D8%A8%D8%A7%D8%AD%D8%AB">هنا</a>.<p>
 
 <h2 dir="rtl">المساهمة في التطوير</h2>
 
