@@ -216,3 +216,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,node
+
+# PNPM lock file (since we only upload package.json but some devs might use pnpm)
+pnpm-lock.yaml
