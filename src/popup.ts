@@ -10,10 +10,16 @@ const resetButton = document.querySelector(".reset-button") as HTMLButtonElement
 // handlers
 async function handle_setting_change(event) {
   const property = event.target.dataset.property;
-  const value =
+  let value =
     event.target.type === "checkbox"
       ? event.target.checked
       : event.target.value;
+      
+  // Ensure notification display time is within allowed range (3-60 seconds)
+  if (property === "notification_display_time") {
+    value = Math.max(3, Math.min(60, parseInt(value, 10)));
+    event.target.value = value; // Update input field to reflect constrained value
+  }
 
   set_setting(property, value);
 }

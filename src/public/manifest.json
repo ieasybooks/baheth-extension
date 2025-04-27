@@ -40,7 +40,12 @@
       "128": "icons/128.png"
     }
   },
-  "permissions": ["storage"],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://baheth.ieasybooks.com/*"
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "baheth@ieasybooks.com"

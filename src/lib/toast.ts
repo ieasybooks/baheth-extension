@@ -8,20 +8,29 @@ export function show_toast(baheth_link: string, type: string) {
 
   ensure_font_imported();
 
-  // Create the toast itself
+  // Create the toast container
   const toast = document.createElement("div");
   toast.className = "baheth-toast";
-  toast.classList.add("show");
   
   if (is_mobile_device()) {
     toast.classList.add("mobile");
   }
-  
-  toast.classList.add("with-icon");
 
-  // Create the toast title
-  const toast_title = document.createElement("div");
-  toast_title.className = "toast-title";
+  // Create the header
+  const header = document.createElement("div");
+  header.className = "baheth-toast-header";
+  
+  // Create the icon
+  const icon = document.createElement("div");
+  icon.className = "baheth-toast-icon";
+  
+  // Create the title wrapper
+  const titleWrapper = document.createElement("div");
+  titleWrapper.className = "baheth-toast-title-wrapper";
+  
+  // Create the title
+  const title = document.createElement("div");
+  title.className = "toast-title";
   
   let title_text = "";
   if (type === "video") {
@@ -29,49 +38,79 @@ export function show_toast(baheth_link: string, type: string) {
   } else if (type === "playlist") {
     title_text = "تم العثور على قائمة تشغيل";
   }
-  toast_title.textContent = title_text;
-
+  title.textContent = title_text;
+  
+  titleWrapper.appendChild(title);
+  
+  // Add elements to header
+  header.appendChild(icon);
+  header.appendChild(titleWrapper);
+  
+  // Create content section
+  const content = document.createElement("div");
+  content.className = "baheth-toast-content";
+  
   // Create the message
   const message = document.createElement("p");
   message.className = "toast-description";
   message.textContent = "تم اكتشاف المحتوى وإعداده للتصفح في منصة باحث";
-
-  // Create a wrapper div for content
-  const content = document.createElement("div");
-  content.appendChild(toast_title);
-  content.appendChild(message);
-
-  // Create the action button
-  const action_button = document.createElement("button");
-  action_button.textContent = "مشاهدة في باحث";
-  action_button.className = "action-button";
-  action_button.setAttribute("aria-label", "فتح الرابط في باحث");
   
-  action_button.addEventListener("click", (e) => {
+  content.appendChild(message);
+  
+  // Create actions container
+  const actions = document.createElement("div");
+  actions.className = "baheth-toast-actions";
+  
+  // Create the watch action button
+  const watchButton = document.createElement("button");
+  watchButton.textContent = "مشاهدة في باحث";
+  watchButton.className = "action-button";
+  watchButton.setAttribute("aria-label", "فتح الرابط في باحث");
+  
+  watchButton.addEventListener("click", (e) => {
     e.stopPropagation();
     window.open(baheth_link, "_blank");
     delete_toast(toast);
   });
   
-  content.appendChild(action_button);
+  // Create the dismiss button
+  const dismissButton = document.createElement("button");
+  dismissButton.textContent = "تجاهل";
+  dismissButton.className = "action-button secondary";
+  
+  dismissButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    delete_toast(toast);
+  });
+  
+  // Add buttons to actions
+  actions.appendChild(watchButton);
+  actions.appendChild(dismissButton);
 
   // Create the close button
-  const close_button = document.createElement("button");
-  close_button.textContent = "×";
-  close_button.className = "close";
-  close_button.setAttribute("aria-label", "إغلاق");
+  const closeButton = document.createElement("button");
+  closeButton.textContent = "×";
+  closeButton.className = "close";
+  closeButton.setAttribute("aria-label", "إغلاق");
   
-  close_button.addEventListener("click", (e) => {
+  closeButton.addEventListener("click", (e) => {
     e.stopPropagation();
     delete_toast(toast);
   });
 
   // Add all elements to the toast
+  toast.appendChild(header);
   toast.appendChild(content);
-  toast.appendChild(close_button);
+  toast.appendChild(actions);
+  toast.appendChild(closeButton);
 
   // Add the toast to the body
   document.body.appendChild(toast);
+  
+  // Add show class after a small delay to trigger animation
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 10);
 
   // Update found videos count in settings
   chrome.storage.local.get("settings", (result) => {
@@ -80,10 +119,13 @@ export function show_toast(baheth_link: string, type: string) {
     chrome.storage.local.set({ settings });
   });
 
-  // Auto-close the toast after a delay
+  // Auto-close the toast using the user's notification display time
   chrome.storage.local.get("settings", (result) => {
     const settings = result.settings || JSON.parse(JSON.stringify(default_settings));
-    const notification_display_time = settings.notification_display_time || 10;
+    let notification_display_time = settings.notification_display_time || 10;
+    
+    // Ensure notification time is within allowed range (3-60 seconds)
+    notification_display_time = Math.max(3, Math.min(60, notification_display_time));
     
     setTimeout(() => {
       if (document.body.contains(toast)) {
@@ -94,69 +136,132 @@ export function show_toast(baheth_link: string, type: string) {
 }
 
 export function show_error_toast(message: string, description?: string) {
-  if (document.querySelector(".baheth-toast.error")) {
-    return;
+  // Limit to one error toast at a time
+  const existingToast = document.querySelector(".baheth-toast.error");
+  if (existingToast) {
+    delete_toast(existingToast as HTMLElement);
   }
 
   ensure_font_imported();
 
-  // Create the toast
+  // Create the toast container
   const toast = document.createElement("div");
   toast.className = "baheth-toast error";
-  toast.classList.add("show");
   
   if (is_mobile_device()) {
     toast.classList.add("mobile");
   }
   
-  toast.classList.add("with-icon");
-
+  // Create the header
+  const header = document.createElement("div");
+  header.className = "baheth-toast-header";
+  
+  // Create the icon
+  const icon = document.createElement("div");
+  icon.className = "baheth-toast-icon";
+  icon.textContent = "⚠️";
+  
+  // Create the title wrapper
+  const titleWrapper = document.createElement("div");
+  titleWrapper.className = "baheth-toast-title-wrapper";
+  
   // Create the title
-  const toast_title = document.createElement("div");
-  toast_title.className = "toast-title";
-  toast_title.textContent = "خطأ";
+  const title = document.createElement("div");
+  title.className = "toast-title";
+  title.textContent = message;
+  
+  titleWrapper.appendChild(title);
+  
+  // Add elements to header
+  header.appendChild(icon);
+  header.appendChild(titleWrapper);
+  
+  // Create content section
+  const content = document.createElement("div");
+  content.className = "baheth-toast-content";
 
   // Create the message
-  const message_element = document.createElement("p");
-  message_element.className = "toast-description";
-  message_element.textContent = message;
-
-  // Create a wrapper div for content
-  const content = document.createElement("div");
-  content.appendChild(toast_title);
-  content.appendChild(message_element);
-
-  // Add description if provided
-  if (description) {
-    const description_element = document.createElement("p");
-    description_element.className = "toast-description";
-    description_element.textContent = description;
-    content.appendChild(description_element);
+  const messageElement = document.createElement("p");
+  messageElement.className = "toast-description";
+  
+  // If description is empty, use a default message
+  if (!description) {
+    description = "يرجى التحقق من اتصالك بالإنترنت وحاول مرة أخرى.";
+  }
+  
+  messageElement.textContent = description;
+  
+  content.appendChild(messageElement);
+  
+  // Create actions container
+  const actions = document.createElement("div");
+  actions.className = "baheth-toast-actions";
+  
+  // Add try again button for connection errors
+  if (message.includes("اتصال") || description.includes("اتصال")) {
+    const retryButton = document.createElement("button");
+    retryButton.textContent = "حاول مرة أخرى";
+    retryButton.className = "action-button retry";
+    
+    retryButton.addEventListener("click", () => {
+      delete_toast(toast);
+      // Trigger a page refresh to retry the connection
+      window.location.reload();
+    });
+    
+    actions.appendChild(retryButton);
   }
 
-  // Create close button
-  const close_button = document.createElement("button");
-  close_button.textContent = "إغلاق";
-  close_button.className = "action-button";
+  // Create the dismiss button
+  const dismissButton = document.createElement("button");
+  dismissButton.textContent = "إغلاق";
+  dismissButton.className = "action-button secondary";
   
-  close_button.addEventListener("click", () => {
+  dismissButton.addEventListener("click", () => {
     delete_toast(toast);
   });
   
-  content.appendChild(close_button);
+  actions.appendChild(dismissButton);
 
-  // Add elements to toast
+  // Create the close button
+  const closeButton = document.createElement("button");
+  closeButton.textContent = "×";
+  closeButton.className = "close";
+  closeButton.setAttribute("aria-label", "إغلاق");
+  
+  closeButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    delete_toast(toast);
+  });
+
+  // Add all elements to the toast
+  toast.appendChild(header);
   toast.appendChild(content);
+  toast.appendChild(actions);
+  toast.appendChild(closeButton);
 
   // Add the toast to the body
   document.body.appendChild(toast);
 
-  // Auto-close the toast after 10 seconds
+  // Add show class after a small delay to trigger animation
   setTimeout(() => {
-    if (document.body.contains(toast)) {
-      delete_toast(toast);
-    }
-  }, 10000);
+    toast.classList.add("show");
+  }, 10);
+
+  // Auto-close the toast using the user's notification display time
+  chrome.storage.local.get("settings", (result) => {
+    const settings = result.settings || JSON.parse(JSON.stringify(default_settings));
+    let notification_display_time = settings.notification_display_time || 10;
+    
+    // Ensure notification time is within allowed range (3-60 seconds)
+    notification_display_time = Math.max(3, Math.min(60, notification_display_time));
+    
+    setTimeout(() => {
+      if (document.body.contains(toast)) {
+        delete_toast(toast);
+      }
+    }, notification_display_time * 1000);
+  });
 }
 
 export function delete_toast(toast: HTMLElement) {
@@ -183,7 +288,7 @@ function ensure_font_imported() {
     const link = document.createElement("link");
     link.id = "baheth-font-import";
     link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600&display=swap";
+    link.href = "https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap";
     document.head.appendChild(link);
   }
   
@@ -198,7 +303,8 @@ function ensure_font_imported() {
 }
 
 function is_mobile_device() {
-  return window.innerWidth <= 768;
+  return window.innerWidth <= 768 || 
+         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 function is_rtl() {

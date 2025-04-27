@@ -1,7 +1,7 @@
 // settings
 export const default_settings = {
   auto_redirect: false,
-  notification_display_time: 10, // in seconds
+  notification_display_time: 10, // in seconds (min: 3, max: 60)
   found_videos_count: 0,
 };
 

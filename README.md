@@ -17,18 +17,6 @@
   <li>فيميو</li>
 </ul>
 
-<h2 dir="rtl">المميزات</h2>
-
-<ul dir="rtl">
-  <li>تنبيهات بتوفر الفيديوهات على المنصات المدعومة</li>
-  <li>خيار الانتقال التلقائي إلى منصة باحث</li>
-  <li>إمكانية تخصيص مدة عرض الإشعارات</li>
-  <li>معالجة محسنة للأخطاء مع رسائل سهلة الفهم</li>
-  <li>إحصائيات لتتبع الفيديوهات المكتشفة</li>
-  <li>واجهة مستخدم عصرية ومتجاوبة</li>
-  <li>معالجة انتهاء مهلة الاتصال لموثوقية أفضل</li>
-</ul>
-
 <h2 dir="rtl">تثبيت الإضافة</h2>
 
 <p dir="rtl">يمكن الحصول على الإضافة من متجر إضافات متصفح Google Chrome من <a href="https://chromewebstore.google.com/detail/ijdjnkiocmodojidknkpajajbpghhacl">هنا</a> أو من متجر إضافات متصفح FireFox من <a href="https://addons.mozilla.org/en-US/firefox/addon/baheth-%D8%A8%D8%A7%D8%AD%D8%AB">هنا</a>.<p>

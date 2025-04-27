@@ -6,8 +6,8 @@ import { get_clean_video_url, get_page_type, get_platform_type } from "./lib/url
 
 async function detect_baheth_media() {
   try {
-    // delete all toasts if any
-    delete_all_toasts();
+  // delete all toasts if any
+  delete_all_toasts();
 
     // Check if current platform is supported
     const platform = get_platform_type();
@@ -22,43 +22,55 @@ async function detect_baheth_media() {
       return;
     }
 
-    // get page type (playlist, video, unknown)
+  // get page type (playlist, video, unknown)
     const page_type = get_page_type(clean_url);
     if (page_type === "unknown") {
       return; // Not a video or playlist page, no need to show error
     }
 
-    // get data for the given url
+  // get data for the given url
     let baheth_data;
     try {
       baheth_data = page_type === "video"
-        ? await get_baheth_media_info(clean_url)
-        : await get_baheth_playlist_info(clean_url);
+      ? await get_baheth_media_info(clean_url)
+      : await get_baheth_playlist_info(clean_url);
     } catch (error) {
-      show_error_toast("خطأ في الاتصال", "حدث خطأ أثناء الاتصال بخدمة باحث. يرجى المحاولة مرة أخرى.");
+      const errorMessage = error.message || "";
+      
+      // Only show errors for networks issues, not for content not available
+      if (errorMessage.includes('timeout') || errorMessage.includes('AbortError')) {
+        show_error_toast("خطأ في الاتصال", "انتهت مهلة طلب البيانات من باحث. تحقق من اتصالك بالإنترنت وحاول مرة أخرى.");
+      } else if (errorMessage.includes('Network connection error') || errorMessage.includes('Failed to fetch')) {
+        show_error_toast("خطأ في الاتصال", "تعذر الاتصال بخدمة باحث. تحقق من اتصالك بالإنترنت وحاول مرة أخرى.");
+      }
+      
       console.error("Error fetching data from Baheth:", error);
       return;
     }
 
+    // Don't show any toast if the content isn't available on Baheth
     if (!baheth_data?.link) {
-      // Media not found in Baheth - show a message about it
-      show_error_toast("المحتوى غير متوفر", "هذا المحتوى غير متوفر على منصة باحث.");
-      return;
+      return; // Content not available, don't show any notification
     }
 
-    // get extension settings
-    const settings = await get_settings();
+  // get extension settings
+  const settings = await get_settings();
 
-    // if it exists on baheth, show a toast
-    // or if auto-redirect is enabled, redirect to baheth.
-    if (settings.auto_redirect) {
-      window.location.href = baheth_data.link;
-    } else {
-      show_toast(baheth_data.link, page_type);
-    }
+  // if it exists on baheth, show a toast
+  // or if auto-redirect is enabled, redirect to baheth.
+  if (settings.auto_redirect) {
+    window.location.href = baheth_data.link;
+  } else {
+    show_toast(baheth_data.link, page_type);
+  }
   } catch (error) {
     console.error("Error in detect_baheth_media:", error);
-    show_error_toast("حدث خطأ", "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.");
+    
+    // Only show user-facing errors for critical issues
+    const errorMessage = error?.message || "";
+    if (errorMessage.includes('timeout') || errorMessage.includes('connection')) {
+      show_error_toast("خطأ في الاتصال", "تعذر الاتصال بخدمة باحث. تحقق من اتصالك بالإنترنت وحاول مرة أخرى.");
+    }
   }
 }
 

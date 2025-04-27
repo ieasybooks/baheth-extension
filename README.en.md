@@ -17,18 +17,6 @@
   <li>Vimeo</li>
 </ul>
 
-<h2>Features</h2>
-
-<ul>
-  <li>Video availability notifications on supported platforms</li>
-  <li>Auto-redirect to Baheth platform option</li>
-  <li>Customizable notification display time</li>
-  <li>Enhanced error handling with user-friendly messages</li>
-  <li>Statistics tracker for discovered videos</li>
-  <li>Modern and responsive user interface</li>
-  <li>Network timeout handling for better reliability</li>
-</ul>
-
 <h2>Installation</h2>
 
 <p>You can get the extension from Google Chrome Web Store <a href="https://chromewebstore.google.com/detail/ijdjnkiocmodojidknkpajajbpghhacl">here</a> or from FireFox Add-ons <a href="https://addons.mozilla.org/en-US/firefox/addon/baheth-%D8%A8%D8%A7%D8%AD%D8%AB">here</a>.<p>
