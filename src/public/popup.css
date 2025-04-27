@@ -1,4 +1,85 @@
 @import url(styles.css);
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600&display=swap');
+
+/* Style for the number input field */
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.number-input {
+    width: 50px;
+    text-align: center;
+    padding: 6px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: 'Noto Naskh Arabic', sans-serif;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.number-input:focus {
+    border-color: #4285f4;
+    box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.3);
+    outline: none;
+}
+
+.number-input:hover {
+    border-color: #bbb;
+}
+
+/* Visual feedback for input changes */
+.input-feedback {
+    background-color: #e8f0fe;
+    border-color: #4285f4;
+}
+
+/* Style for stats section and reset button */
+.stats {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    transition: color 0.2s ease;
+}
+
+.reset-button {
+    display: block;
+    margin: 12px auto 0;
+    padding: 8px 16px;
+    background-color: #f1f3f4;
+    border: 1px solid #dadce0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: 'Noto Naskh Arabic', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.reset-button:hover:not(:disabled) {
+    background-color: #e8eaed;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.reset-button:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.reset-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Visual feedback for button click */
+.button-feedback {
+    background-color: #e8f0fe !important;
+    border-color: #4285f4 !important;
+}
 
 html,
 body {
@@ -14,14 +95,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    font-size: 18px;
+    justify-content: flex-start;
+    font-size: 16px;
     font-family: 'Noto Naskh Arabic', sans-serif !important;
     user-select: none;
+    padding: 0 0 24px 0;
+    direction: rtl;
 }
 
 * {
     z-index: 5;
+    box-sizing: border-box;
 }
 
 p {
@@ -36,6 +120,7 @@ img {
 /* Background pattern */
 .bg-pattern {
     stroke: rgb(223, 223, 223);
+    stroke-width: 1px;
     mask-image: radial-gradient(75% 100% at top, #fff, #0000);
     height: 196px;
     left: 0;
@@ -48,47 +133,69 @@ img {
 
 /* Logo */
 .logo {
-    margin: 32px 0 24px 0;
+    margin: 24px 0 20px 0;
     position: relative;
+    height: 64px;
+    width: auto;
 }
 
 /* List title */
 .list-title {
     display: block;
-    text-align: start;
+    text-align: right;
     width: 100%;
-    margin: 0 8px;
-    color: gray;
+    margin: 0 0 12px 0;
+    color: #4285f4;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 0 16px;
 }
 
 /* Options list */
 .options-list {
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     margin-bottom: 12px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .options-list .toggle-option {
     display: flex;
     justify-content: space-between;
-    align-items: start;
+    align-items: center;
     user-select: none;
     cursor: pointer;
-    padding: 10px 8px !important;
+    padding: 14px 16px !important;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.options-list .toggle-option:last-child {
+    border-bottom: none;
 }
 
 .options-list .toggle-option:hover {
-    background-color: rgb(241, 241, 241);
+    background-color: rgb(248, 249, 250);
+}
+
+.options-list .toggle-option .info {
+    flex: 1;
+    padding-left: 12px;
 }
 
 .options-list .toggle-option .info .title {
     font-weight: 600;
     line-height: 1.6;
+    font-size: 14px;
 }
 
-/* Toggle swtich */
+/* Toggle switch */
 .toggle {
     width: 48px;
     height: 28px;
@@ -98,6 +205,7 @@ img {
     box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
     transition: .15s ease;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .toggle .toggle_checkbox {
@@ -116,16 +224,16 @@ img {
     transition: .15s ease;
 }
 
+.toggle:hover {
+    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.4);
+}
+
 .toggle:has(.toggle_checkbox:checked) {
-    background-color: rgb(27, 27, 27);
-    box-shadow: none;
+    background-color: rgba(66, 133, 244, 0.3);
+    box-shadow: 0px 0px 0px 1px rgba(66, 133, 244, 0.5);
 }
 
 .toggle:has(.toggle_checkbox:checked)::after {
     right: calc(100% - 26px);
-    background-color: rgb(255, 255, 255);
-}
-
-.options-list, .list-title, .toggle-option {
-    direction: rtl;
+    background-color: #4285f4;
 }

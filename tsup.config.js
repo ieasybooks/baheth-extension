@@ -7,6 +7,7 @@ export default defineConfig((options) => ({
   entry: {
     content: "src/content.ts",
     popup: "src/popup.ts",
+    background: "src/background.ts",
   },
   publicDir: "src/public/",
   dts: false,

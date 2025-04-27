@@ -12,6 +12,25 @@ export type BahethVideoInfo = {
   transcription_epub_link: string;
 };
 
+// Timeout for fetch requests in milliseconds
+const FETCH_TIMEOUT = 10000;
+
+/**
+ * Wraps a fetch request with timeout functionality
+ */
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeout = FETCH_TIMEOUT) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  
+  const response = await fetch(url, {
+    ...options,
+    signal: controller.signal
+  });
+  
+  clearTimeout(id);
+  return response;
+}
+
 export async function get_baheth_media_info(
   reference_id: string
 ): Promise<BahethVideoInfo | undefined> {
@@ -20,15 +39,25 @@ export async function get_baheth_media_info(
     encodeURIComponent(reference_id)
   );
 
-  const data = await fetch(request_url, {
-    headers: {
-      Accept: "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .catch(() => {});
-
-  return data;
+  try {
+    const response = await fetchWithTimeout(request_url, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching media info:", error);
+    if (error.name === 'AbortError') {
+      throw new Error('Request timeout');
+    }
+    throw error;
+  }
 }
 
 export async function get_baheth_playlist_info(
@@ -39,13 +68,23 @@ export async function get_baheth_playlist_info(
     encodeURIComponent(reference_id)
   );
 
-  const data = await fetch(request_url, {
-    headers: {
-      Accept: "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .catch(() => {});
-
-  return data;
+  try {
+    const response = await fetchWithTimeout(request_url, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching playlist info:", error);
+    if (error.name === 'AbortError') {
+      throw new Error('Request timeout');
+    }
+    throw error;
+  }
 }

@@ -1,6 +1,8 @@
 // settings
 export const default_settings = {
   auto_redirect: false,
+  notification_display_time: 10, // in seconds
+  found_videos_count: 0,
 };
 
 // api endpoints
