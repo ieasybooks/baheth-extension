@@ -6,11 +6,9 @@ chrome.commands.onCommand.addListener(async (command) => {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     const activeTab = tabs[0];
     
-    // Check if the tab is on one of our supported platforms
+    // Check if the tab is on our supported platform (YouTube)
     const supportedPlatforms = [
-      "youtube.com",
-      "dailymotion.com",
-      "vimeo.com"
+      "youtube.com"
     ];
     
     const url = new URL(activeTab.url || "");

@@ -16,9 +16,7 @@
     {
       "matches": [
         "https://www.youtube.com/*", 
-        "https://youtube.com/*",
-        "https://www.dailymotion.com/*",
-        "https://vimeo.com/*"
+        "https://youtube.com/*"
       ],
       "js": ["content.js"],
       "css": ["styles.css"]

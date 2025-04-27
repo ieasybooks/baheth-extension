@@ -13,8 +13,6 @@
 
 <ul>
   <li>YouTube</li>
-  <li>Dailymotion</li>
-  <li>Vimeo</li>
 </ul>
 
 <h2>Installation</h2>
