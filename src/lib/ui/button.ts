@@ -119,7 +119,7 @@ export async function render_button(
 
   let parent: Element | undefined | null;
 
-  if (location == "video-info") {
+  if (location === "video-info") {
     const like_dislike_button_selector =
       "segmented-like-dislike-button-view-model";
     await wait_for_element(like_dislike_button_selector);
