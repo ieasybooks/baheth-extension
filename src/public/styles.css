@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
 
 .baheth-toast,
-.baheth-toast * {
-    font-family: 'Noto Naskh Arabic', sans-serif !important;
+.baheth-toast *,
+.baheth-button,
+.baheth-button *,
+.baheth-button-dropdown,
+.baheth-button-dropdown * {
+    font-family: 'NotoNaskhArabicUI', system-ui, sans-serif !important;
     font-optical-sizing: auto !important;
     font-weight: inherit !important;
 }
@@ -92,4 +96,68 @@
     display: block;
     pointer-events: all;
     opacity: 1;
+}
+
+/* Button */
+.baheth-button {
+    background-color: whitesmoke;
+    border-radius: 100px;
+    border: none;
+    outline: none;
+    height: 36px;
+    direction: rtl;
+    text-align: right;
+    text-wrap: nowrap;
+    padding: 10px 16px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.2;
+    cursor: pointer;
+    position: relative;
+}
+
+.baheth-button:hover {
+    opacity: 0.9;
+}
+
+.baheth-button:active {
+    opacity: 0.8;
+}
+
+/* Youtube-specific styles */
+body[dir="rtl"] .baheth-yt-button_video-info {
+    margin-left: 8px;
+}
+
+body[dir="ltr"] .baheth-yt-button_video-info {
+    margin-right: 8px;
+}
+
+/* Button dropdown */
+.baheth-button-dropdown {
+    position: absolute;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    align-items: stretch;
+    justify-content: center;
+    border-radius: 12px;
+    transform: translateY(8px);
+}
+
+.baheth-button-dropdown:not(.visible) {
+    display: none;
+}
+
+.baheth-button-dropdown-item {
+    border: none;
+    padding: 8px 4px;
+    cursor: pointer;
+    text-align: center;
+    direction: rtl;
+}
+
+.baheth-button-dropdown-item:hover {
+    background-color: gainsboro;
 }

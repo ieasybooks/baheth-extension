@@ -1,4 +1,5 @@
 import { get_settings, set_setting } from "./lib/storage";
+import { ensure_fonts_imported } from "./lib/fonts";
 
 // elements
 const settings_inputs = document.querySelectorAll(
@@ -18,6 +19,9 @@ async function handle_setting_change(event) {
 
 // initialization
 (async () => {
+  // load fonts
+  ensure_fonts_imported();
+
   // get saved settings
   const settings = await get_settings();
 

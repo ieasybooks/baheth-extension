@@ -15,8 +15,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    font-family: 'Noto Naskh Arabic', sans-serif !important;
+    font-size: 18.64px;
+    font-family: 'NotoNaskhArabicUI', sans-serif !important;
     user-select: none;
 }
 
@@ -126,6 +126,8 @@ img {
     background-color: rgb(255, 255, 255);
 }
 
-.options-list, .list-title, .toggle-option {
+.options-list,
+.list-title,
+.toggle-option {
     direction: rtl;
 }

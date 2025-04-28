@@ -23,6 +23,12 @@
     "default_popup": "popup.html"
   },
   "permissions": ["storage"],
+  "web_accessible_resources": [
+    {
+      "resources": ["fonts/*"],
+      "matches": ["https://*.youtube.com/*"]
+    }
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "baheth@ieasybooks.com"

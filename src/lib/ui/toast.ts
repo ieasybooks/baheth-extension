@@ -1,7 +1,4 @@
 export function show_toast(baheth_link, type: "video" | "playlist") {
-  // Ensure the font import is added before creating the toast
-  ensure_font_imported();
-
   // create toast element
   const toast = document.createElement("div");
   toast.classList.add("baheth-toast");
@@ -49,23 +46,4 @@ export function delete_all_toasts() {
       }
     }, 500); // Adjust timeout based on transition duration (0.25s in your CSS)
   });
-}
-
-function ensure_font_imported() {
-  const font_import_id = "baheth-font-import";
-
-  // Check if the style tag already exists
-  if (document.getElementById(font_import_id)) {
-    return;
-  }
-
-  // Create a style element
-  const style = document.createElement("style");
-  style.id = font_import_id;
-
-  // Add the Google Fonts @import rule
-  style.textContent = `@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');`;
-
-  // Append the style element to the head of the document
-  (document.head || document.documentElement).appendChild(style);
 }
