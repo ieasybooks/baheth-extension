@@ -55,7 +55,9 @@ async function handle_baheth_content(
   // render transcription download button if possible
   if (
     baheth_data?.transcription_txt_link ||
-    baheth_data?.transcription_pdf_link
+    baheth_data?.transcription_pdf_link ||
+    baheth_data?.transcription_srt_link ||
+    baheth_data?.transcription_epub_link
   ) {
     let button = create_button("تحميل التفريغ", {
       className: "transcription-download-button",
