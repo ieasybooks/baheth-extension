@@ -4,7 +4,10 @@ import { get_settings } from "./lib/storage";
 import { create_button, render_button } from "./lib/ui/button";
 import { delete_all_toasts, show_toast } from "./lib/ui/toast";
 import { get_clean_youtube_url, get_youtube_page_type } from "./lib/url";
-import { get_tafreegh_options, get_url_by_type } from "./lib/tafreegh";
+import {
+  get_transcription_options,
+  get_url_by_type,
+} from "./lib/transcription";
 import { download_file } from "./lib/downloader";
 import { ensure_fonts_imported } from "./lib/fonts";
 
@@ -49,23 +52,23 @@ async function handle_baheth_content(
     show_toast(baheth_data.link, page_type);
   }
 
-  // render tafreegh download button if possible
+  // render transcription download button if possible
   if (
     baheth_data?.transcription_txt_link ||
     baheth_data?.transcription_pdf_link
   ) {
     let button = create_button("تحميل التفريغ", {
-      className: "tafreegh-download-button",
+      className: "transcription-download-button",
       button_type: "with-dropdown",
       dropdown_items: [
-        ...get_tafreegh_options(baheth_data).map((option) => ({
+        ...get_transcription_options(baheth_data).map((option) => ({
           label: option.toUpperCase(),
           value: option,
         })),
       ],
       dropdown_callback: (type: string) => {
-        let tafreegh_url = get_url_by_type(baheth_data, type);
-        download_file(tafreegh_url);
+        let download_url = get_url_by_type(baheth_data, type);
+        download_file(download_url);
       },
     });
 
