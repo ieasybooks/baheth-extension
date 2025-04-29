@@ -1,4 +1,10 @@
-export function show_toast(baheth_link, type: "video" | "playlist") {
+import { get_settings } from "../storage";
+
+export async function show_toast(baheth_link, type: "video" | "playlist") {
+  // Get settings for timeout
+  const settings = await get_settings();
+  const timeout = settings.notification_timeout || 6000; // Default to 6 seconds if not set
+  
   // Detect dark mode
   const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   
@@ -26,15 +32,15 @@ export function show_toast(baheth_link, type: "video" | "playlist") {
 
   document.body.appendChild(toast);
 
-  // show the toast after 300ms of creation with animation
+  // show the toast after 100ms of creation with animation
   setTimeout(() => {
     toast.classList.add("show");
   }, 100);
 
-  // Auto-hide after 8 seconds
+  // Auto-hide after configured timeout
   const autoHideTimeout = setTimeout(() => {
     delete_all_toasts();
-  }, 8000);
+  }, timeout);
 
   // handle toast click
   toast.onclick = (event) => {
@@ -46,6 +52,55 @@ export function show_toast(baheth_link, type: "video" | "playlist") {
     } else if (target.classList.contains("toast-action") || !target.classList.contains("close")) {
       // open baheth link
       window.open(baheth_link, "_blank");
+    }
+  };
+}
+
+export async function show_error_toast(message: string) {
+  // Get settings for timeout
+  const settings = await get_settings();
+  const timeout = 6000; // Fixed 6 seconds for error messages
+  
+  // Detect dark mode
+  const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  // create toast element
+  const toast = document.createElement("div");
+  toast.classList.add("baheth-toast", "error-toast");
+  if (prefersDarkMode) {
+    toast.classList.add("dark-mode");
+  }
+  
+  toast.innerHTML = `
+    <div class="toast-header">
+      <div class="error-indicator">⚠️</div>
+    </div>
+    <div class="toast-content">
+      <p class="toast-title">خطأ</p>
+      <p class="toast-description">${message}</p>
+    </div>
+    <button class="close" aria-label="إغلاق">×</button>
+  `;
+
+  document.body.appendChild(toast);
+
+  // show the toast after 100ms of creation with animation
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 100);
+
+  // Auto-hide after 6 seconds for error messages
+  const autoHideTimeout = setTimeout(() => {
+    delete_all_toasts();
+  }, timeout);
+
+  // handle toast click
+  toast.onclick = (event) => {
+    const target = event.target as Element;
+    
+    if (target.classList.contains("close")) {
+      clearTimeout(autoHideTimeout);
+      delete_all_toasts();
     }
   };
 }

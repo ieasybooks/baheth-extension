@@ -38,6 +38,30 @@
     overflow: hidden;
 }
 
+/* Error toast styling */
+.baheth-toast.error-toast {
+    background-color: #fff8f8;
+    border-left: 4px solid #e74c3c;
+}
+
+.baheth-toast.error-toast .error-indicator {
+    font-size: 24px;
+    margin-right: 8px;
+}
+
+.baheth-toast.error-toast.dark-mode {
+    background-color: #2a1a1a;
+    border-left: 4px solid #e74c3c;
+}
+
+.baheth-toast.error-toast .toast-title {
+    color: #e74c3c;
+}
+
+.baheth-toast.error-toast.dark-mode .toast-title {
+    color: #ff6b6b;
+}
+
 /* Dark mode toast styling */
 .baheth-toast.dark-mode {
     background-color: #1a1a1a;

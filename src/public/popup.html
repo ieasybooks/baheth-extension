@@ -49,6 +49,31 @@
                     </div>
                 </label>
             </div>
+            
+            <div class="option-item">
+                <div class="option-slider">
+                    <div class="info">
+                        <p class="title">مدة عرض الإشعارات</p>
+                        <p class="description">المدة بالثواني التي سيظهر فيها الإشعار</p>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" min="3" max="60" step="1" class="slider" id="notification-timeout-slider"
+                            data-property="notification_timeout" data-type="setting-input" data-multiplier="1000" />
+                        <div class="slider-value"><span id="notification-timeout-value">6</span> ثانية</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-panel">
+            <div class="stats-header">
+                <h4 class="stats-title">إحصائيات</h4>
+            </div>
+            <div class="stats-item">
+                <div class="stat-label">عدد مقاطع الفيديو المكتشفة</div>
+                <div class="stat-value" id="found-videos-count">0</div>
+            </div>
+            <button class="reset-button" id="reset-videos-count" disabled>إعادة تعيين</button>
         </div>
 
         <div class="footer">

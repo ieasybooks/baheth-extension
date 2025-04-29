@@ -1,6 +1,9 @@
 // settings
 export const default_settings = {
   auto_redirect: false,
+  found_videos_count: 0,
+  notification_timeout: 6000, // Default timeout in milliseconds (6 seconds)
+  auto_check: true,
 };
 
 // api endpoints
