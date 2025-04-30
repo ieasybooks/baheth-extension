@@ -11,22 +11,46 @@ import {
 import { download_file } from "./lib/downloader";
 import { ensure_fonts_imported } from "./lib/fonts";
 
+// Status tracking to prevent duplicate API calls
+let isChecking = false;
+
 async function handle_location_change() {
+  // Prevent concurrent API requests
+  if (isChecking) return;
+  
   try {
+    isChecking = true;
+    
     // generating a clean youtube url (reference id)
     const clean_url = get_clean_youtube_url();
-    if (!clean_url) return;
+    if (!clean_url) {
+      isChecking = false;
+      return;
+    }
 
     // get page type (playlist, video, unknown)
     const page_type = get_youtube_page_type(clean_url);
-    if (page_type === "unknown") return;
+    if (page_type === "unknown") {
+      isChecking = false;
+      return;
+    }
+
+    // Show loading indicator to improve user feedback
+    const loadingToast = await show_toast("", page_type, 0, true);
 
     // get data for the given url
     const baheth_data =
       page_type === "video"
         ? await get_baheth_media_info(clean_url)
         : await get_baheth_playlist_info(clean_url);
-    if (!baheth_data?.link) return;
+    
+    // Remove loading indicator
+    if (loadingToast) delete_all_toasts();
+    
+    if (!baheth_data?.link) {
+      isChecking = false;
+      return;
+    }
 
     // Increment the found videos count
     const settings = await get_settings();
@@ -36,6 +60,8 @@ async function handle_location_change() {
   } catch (error) {
     console.error("Error in handle_location_change:", error);
     show_error_toast("حدث خطأ أثناء التحقق من المحتوى. يرجى المحاولة مرة أخرى لاحقًا.");
+  } finally {
+    isChecking = false;
   }
 }
 
@@ -43,6 +69,8 @@ async function handle_location_change() {
 function cleanup() {
   // delete all toasts if any
   delete_all_toasts();
+  // Reset checking state
+  isChecking = false;
 }
 
 // runs if the video/playlist is already on baheth
@@ -97,13 +125,22 @@ async function handle_baheth_content(
   }
 }
 
+// Add debounced handler to prevent excessive API calls on frequent page updates
+let debounceTimer;
+function debounced_handle_location_change() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    handle_location_change();
+  }, 300);
+}
+
 // add event listener for "yt-page-data-updated"
 // this is the best way to check if youtube has fetched video data
 // note: there's a difference between "*-updated" and "*-fetched"
 // - yt-page-data-update; when youtube's context provider stores the fetched data.
 // - yt-page-data-fetched; when the request is done.
 document.addEventListener("yt-page-data-updated", (ev) => {
-  handle_location_change();
+  debounced_handle_location_change();
 });
 
 // load fonts
