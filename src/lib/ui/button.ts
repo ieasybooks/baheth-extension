@@ -2,14 +2,14 @@ import { wait_for_element } from "../dom";
 
 type ElementProps = Partial<{
   [K in keyof HTMLButtonElement]: HTMLButtonElement[K] extends
-    | string
-    | number
-    | boolean
-    | CSSStyleDeclaration
-    | DOMTokenList
-    | null
-    ? HTMLButtonElement[K]
-    : never;
+  | string
+  | number
+  | boolean
+  | CSSStyleDeclaration
+  | DOMTokenList
+  | null
+  ? HTMLButtonElement[K]
+  : never;
 }>;
 
 type DropdownItem = {
@@ -38,9 +38,9 @@ function render_button_dropdown(
 
   const update_dropdown_position = () => {
     const button_bounding_rect = button.getBoundingClientRect();
-    dropdown.style.position = "absolute";
+    dropdown.style.position = "fixed";
     dropdown.style.left = `${button_bounding_rect.left}px`;
-    dropdown.style.top = `${button_bounding_rect.bottom}px`;
+    dropdown.style.top = `${button_bounding_rect.top + button_bounding_rect.height}px`;
     dropdown.style.width = `${button_bounding_rect.width}px`;
   };
   function toggle_dropdown() {
@@ -78,6 +78,7 @@ function render_button_dropdown(
       close_dropdown();
     }
   });
+  document.addEventListener('scroll', update_dropdown_position)
 
   document.body.appendChild(dropdown);
   return dropdown;
