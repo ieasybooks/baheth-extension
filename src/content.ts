@@ -1,8 +1,8 @@
 import { get_baheth_media_info, get_baheth_playlist_info } from "./lib/api";
 import { init_location_observer } from "./lib/observer";
-import { get_settings } from "./lib/storage";
+import { get_settings, set_setting } from "./lib/storage";
 import { create_button, render_button } from "./lib/ui/button";
-import { delete_all_toasts, show_toast } from "./lib/ui/toast";
+import { delete_all_toasts, show_toast, show_error_toast } from "./lib/ui/toast";
 import { get_clean_youtube_url, get_youtube_page_type } from "./lib/url";
 import {
   get_transcription_options,
@@ -11,29 +11,66 @@ import {
 import { download_file } from "./lib/downloader";
 import { ensure_fonts_imported } from "./lib/fonts";
 
+// Status tracking to prevent duplicate API calls
+let isChecking = false;
+
 async function handle_location_change() {
-  // generating a clean youtube url (reference id)
-  const clean_url = get_clean_youtube_url();
-  if (!clean_url) return;
+  // Prevent concurrent API requests
+  if (isChecking) return;
+  
+  try {
+    isChecking = true;
+    
+    // generating a clean youtube url (reference id)
+    const clean_url = get_clean_youtube_url();
+    if (!clean_url) {
+      isChecking = false;
+      return;
+    }
 
-  // get page type (playlist, video, unknown)
-  const page_type = get_youtube_page_type(clean_url);
-  if (page_type === "unknown") return;
+    // get page type (playlist, video, unknown)
+    const page_type = get_youtube_page_type(clean_url);
+    if (page_type === "unknown") {
+      isChecking = false;
+      return;
+    }
 
-  // get data for the given url
-  const baheth_data =
-    page_type === "video"
-      ? await get_baheth_media_info(clean_url)
-      : await get_baheth_playlist_info(clean_url);
-  if (!baheth_data?.link) return;
+    // Show loading indicator to improve user feedback
+    const loadingToast = await show_toast("", page_type, 0, true);
 
-  handle_baheth_content(baheth_data, page_type);
+    // get data for the given url
+    const baheth_data =
+      page_type === "video"
+        ? await get_baheth_media_info(clean_url)
+        : await get_baheth_playlist_info(clean_url);
+    
+    // Remove loading indicator
+    if (loadingToast) delete_all_toasts();
+    
+    if (!baheth_data?.link) {
+      isChecking = false;
+      return;
+    }
+
+    // Increment the found videos count
+    const settings = await get_settings();
+    await set_setting('found_videos_count', (settings.found_videos_count || 0) + 1);
+
+    handle_baheth_content(baheth_data, page_type);
+  } catch (error) {
+    console.error("Error in handle_location_change:", error);
+    show_error_toast("حدث خطأ أثناء التحقق من المحتوى. يرجى المحاولة مرة أخرى لاحقًا.");
+  } finally {
+    isChecking = false;
+  }
 }
 
 // cleanup function to remove extension-related DOM elements and other stuff
 function cleanup() {
   // delete all toasts if any
   delete_all_toasts();
+  // Reset checking state
+  isChecking = false;
 }
 
 // runs if the video/playlist is already on baheth
@@ -41,41 +78,60 @@ async function handle_baheth_content(
   baheth_data,
   page_type: "video" | "playlist"
 ) {
-  // get extension settings
-  const settings = await get_settings();
+  try {
+    // get extension settings
+    const settings = await get_settings();
 
-  // if it exists on baheth, show a toast
-  // or if auto-redirect is enabled, redirect to baheth.
-  if (settings.auto_redirect) {
-    window.location.href = baheth_data.link;
-  } else {
-    show_toast(baheth_data.link, page_type);
+    // if it exists on baheth, show a toast
+    // or if auto-redirect is enabled, redirect to baheth.
+    if (settings.auto_redirect) {
+      window.location.href = baheth_data.link;
+    } else {
+      show_toast(baheth_data.link, page_type);
+    }
+
+    // render transcription download button if possible
+    if (
+      baheth_data?.transcription_txt_link ||
+      baheth_data?.transcription_pdf_link ||
+      baheth_data?.transcription_srt_link ||
+      baheth_data?.transcription_epub_link
+    ) {
+      let button = create_button("تحميل التفريغ", {
+        className: "transcription-download-button",
+        button_type: "with-dropdown",
+        dropdown_items: [
+          ...get_transcription_options(baheth_data).map((option) => ({
+            label: option.toUpperCase(),
+            value: option,
+          })),
+        ],
+        dropdown_callback: (type: string) => {
+          try {
+            let download_url = get_url_by_type(baheth_data, type);
+            download_file(download_url);
+          } catch (error) {
+            console.error("Error downloading transcription:", error);
+            show_error_toast("حدث خطأ أثناء تحميل التفريغ. يرجى المحاولة مرة أخرى.");
+          }
+        },
+      });
+
+      render_button(button, "video-info");
+    }
+  } catch (error) {
+    console.error("Error in handle_baheth_content:", error);
+    show_error_toast("حدث خطأ أثناء عرض المحتوى. يرجى المحاولة مرة أخرى.");
   }
+}
 
-  // render transcription download button if possible
-  if (
-    baheth_data?.transcription_txt_link ||
-    baheth_data?.transcription_pdf_link ||
-    baheth_data?.transcription_srt_link ||
-    baheth_data?.transcription_epub_link
-  ) {
-    let button = create_button("تحميل التفريغ", {
-      className: "transcription-download-button",
-      button_type: "with-dropdown",
-      dropdown_items: [
-        ...get_transcription_options(baheth_data).map((option) => ({
-          label: option.toUpperCase(),
-          value: option,
-        })),
-      ],
-      dropdown_callback: (type: string) => {
-        let download_url = get_url_by_type(baheth_data, type);
-        download_file(download_url);
-      },
-    });
-
-    render_button(button, "video-info");
-  }
+// Add debounced handler to prevent excessive API calls on frequent page updates
+let debounceTimer;
+function debounced_handle_location_change() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    handle_location_change();
+  }, 300);
 }
 
 // add event listener for "yt-page-data-updated"
@@ -84,7 +140,7 @@ async function handle_baheth_content(
 // - yt-page-data-update; when youtube's context provider stores the fetched data.
 // - yt-page-data-fetched; when the request is done.
 document.addEventListener("yt-page-data-updated", (ev) => {
-  handle_location_change();
+  debounced_handle_location_change();
 });
 
 // load fonts
