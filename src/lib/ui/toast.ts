@@ -15,7 +15,7 @@ export function show_toast(baheth_link, type: "video" | "playlist") {
   // show the toast after 300ms of creation
   setTimeout(() => {
     toast.classList.add("show");
-  }, 300);
+  }, 0);
 
   // handle toast click
   toast.onclick = (event) => {
@@ -44,6 +44,6 @@ export function delete_all_toasts() {
       if (toast.parentNode) {
         toast.remove();
       }
-    }, 500); // Adjust timeout based on transition duration (0.25s in your CSS)
+    }, 0); // Adjust timeout based on transition duration (0.25s in your CSS)
   });
 }
