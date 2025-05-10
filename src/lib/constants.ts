@@ -1,6 +1,7 @@
 // settings
 export const default_settings = {
   auto_redirect: false,
+  transcription_view: true
 };
 
 // api endpoints

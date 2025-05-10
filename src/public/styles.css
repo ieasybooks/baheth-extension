@@ -1,163 +1,205 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap");
 
 .baheth-toast,
 .baheth-toast *,
 .baheth-button,
 .baheth-button *,
 .baheth-button-dropdown,
-.baheth-button-dropdown * {
-    font-family: 'NotoNaskhArabicUI', system-ui, sans-serif !important;
-    font-optical-sizing: auto !important;
-    font-weight: inherit !important;
+.baheth-button-dropdown *,
+.baheth-transcription-view,
+.baheth-transcription-view * {
+  font-family: "NotoNaskhArabicUI", system-ui, sans-serif !important;
+  font-optical-sizing: auto !important;
+  font-weight: inherit !important;
 }
 
 .baheth-toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 6px 12px;
-    font-size: 16px !important;
-    background-color: rgb(255 255 255);
-    border-radius: 6px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 5px;
-    z-index: 10000;
-    direction: rtl;
-    display: flex;
-    align-items: right;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    flex-direction: column;
-    gap: 0px;
-    max-width: 100vw;
-    cursor: pointer;
-    transition: 0.25s linear;
-    transition-property: transform, opacity;
-    user-select: none;
-    transform: translateY(10px);
-    opacity: 0;
-    pointer-events: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 6px 12px;
+  font-size: 16px !important;
+  background-color: rgb(255 255 255);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 5px;
+  z-index: 10000;
+  direction: rtl;
+  display: flex;
+  align-items: right;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0px;
+  max-width: 100vw;
+  cursor: pointer;
+  transition: 0.25s linear;
+  transition-property: transform, opacity;
+  user-select: none;
+  transform: translateY(10px);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .baheth-toast.show {
-    transform: translateY(0px);
-    opacity: 1;
-    pointer-events: all;
+  transform: translateY(0px);
+  opacity: 1;
+  pointer-events: all;
 }
 
 .baheth-toast:hover {
-    box-shadow: rgba(8, 4, 4, 0.5) 0px 4px 10px;
-    transition-duration: .1s;
+  box-shadow: rgba(8, 4, 4, 0.5) 0px 4px 10px;
+  transition-duration: 0.1s;
 }
 
 .baheth-toast:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
 .baheth-toast .toast-title {
-    font-weight: 600 !important;
-    font-size: 18px;
-    margin: 0;
-    padding: 0;
+  font-weight: 600 !important;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
 }
 
 .baheth-toast .toast-description {
-    font-weight: 400 !important;
-    font-size: 16px;
-    color: rgb(64, 64, 64);
-    margin: 0;
-    padding: 0;
+  font-weight: 400 !important;
+  font-size: 16px;
+  color: rgb(64, 64, 64);
+  margin: 0;
+  padding: 0;
 }
 
 .baheth-toast button {
-    padding: 8px 16px;
-    border-radius: 6px;
-    background-color: rgb(244, 244, 244);
-    display: block;
-    text-align: center;
-    border: 1px solid rgb(220, 220, 220);
-    outline: none;
-    cursor: pointer;
-    font-size: 14px;
-    color: black;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background-color: rgb(244, 244, 244);
+  display: block;
+  text-align: center;
+  border: 1px solid rgb(220, 220, 220);
+  outline: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: black;
 }
 
 .baheth-toast .close {
-    pointer-events: none;
-    opacity: 0;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    cursor: pointer;
-    transition: all 0.1s linear;
-    box-shadow: 0px 0px 0px 1.6px rgba(228, 228, 228, 1);
+  pointer-events: none;
+  opacity: 0;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  transition: all 0.1s linear;
+  box-shadow: 0px 0px 0px 1.6px rgba(228, 228, 228, 1);
 }
 
 .baheth-toast:hover .close {
-    display: block;
-    pointer-events: all;
-    opacity: 1;
+  display: block;
+  pointer-events: all;
+  opacity: 1;
 }
 
 /* Button */
 .baheth-button {
-    background-color: whitesmoke;
-    border-radius: 100px;
-    border: none;
-    outline: none;
-    height: 36px;
-    direction: rtl;
-    text-align: right;
-    text-wrap: nowrap;
-    padding: 10px 16px;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 1.2;
-    cursor: pointer;
-    position: relative;
+  background-color: whitesmoke;
+  border-radius: 100px;
+  border: none;
+  outline: none;
+  height: 36px;
+  direction: rtl;
+  text-align: right;
+  text-wrap: nowrap;
+  padding: 10px 16px;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.2;
+  cursor: pointer;
+  position: relative;
 }
 
 .baheth-button:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 .baheth-button:active {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 /* Youtube-specific styles */
 body[dir="rtl"] .baheth-yt-button_video-info {
-    margin-left: 8px;
+  margin-left: 8px;
 }
 
 body[dir="ltr"] .baheth-yt-button_video-info {
-    margin-right: 8px;
+  margin-right: 8px;
 }
 
 /* Button dropdown */
 .baheth-button-dropdown {
-    position: absolute;
-    background-color: whitesmoke;
-    display: flex;
-    flex-direction: column;
-    padding: 8px 0;
-    align-items: stretch;
-    justify-content: center;
-    border-radius: 12px;
-    transform: translateY(8px);
+  position: absolute;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  align-items: stretch;
+  justify-content: center;
+  border-radius: 12px;
+  transform: translateY(8px);
 }
 
 .baheth-button-dropdown:not(.visible) {
-    display: none;
+  display: none;
 }
 
 .baheth-button-dropdown-item {
-    border: none;
-    padding: 8px 4px;
-    cursor: pointer;
-    text-align: center;
-    direction: rtl;
+  border: none;
+  padding: 8px 4px;
+  cursor: pointer;
+  text-align: center;
+  direction: rtl;
 }
 
 .baheth-button-dropdown-item:hover {
-    background-color: gainsboro;
+  background-color: gainsboro;
+}
+
+/* transcription view */
+.baheth-transcription-view {
+  background-color: #222222;
+  color: white !important;
+  font-size: 16px !important;
+  direction: rtl !important;
+  text-align: right !important;
+  border-radius: 8px;
+}
+.baheth-transcription-view-header {
+  font-size: inherit;
+  padding: 8px 12px !important;
+  border-bottom: 1px solid #292929;
+  user-select: none;
+}
+.baheth-transcription-view-header h6 {
+  font-size: inherit;
+}
+.baheth-transcription-view-content {
+  max-height: 400px !important;
+  height: 400px !important;
+  overflow-y: auto;
+}
+.baheth-transcription-item {
+  padding: 8px 12px !important;
+}
+.baheth-transcription-item:not(:last-child) {
+  border-bottom: 1px solid #2e2e2e;
+}
+.baheth-transcription-item-time {
+  color: #8c8c8c;
+  font-family: inherit;
+  font-size: 14px;
+}
+.baheth-transcription-item-time::after {
+  content: " ";
+  white-space: preserve;
+  user-select: none;
 }

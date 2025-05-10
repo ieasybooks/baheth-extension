@@ -10,6 +10,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chrome": "^0.0.313",
+    "pretty-ms": "^9.2.0",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
   }
