@@ -172,6 +172,7 @@ body[dir="ltr"] .baheth-yt-button_video-info {
   direction: rtl !important;
   text-align: right !important;
   border-radius: 8px;
+  margin-bottom: 8px;
 }
 .baheth-transcription-view-header {
   font-size: inherit;
