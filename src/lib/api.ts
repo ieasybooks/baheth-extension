@@ -13,12 +13,13 @@ export type BahethVideoInfo = {
 };
 
 export async function get_baheth_media_info(
-  reference_id: string
+  reference_id: string,
+  with_transcription: boolean = false
 ): Promise<BahethVideoInfo | undefined> {
   const request_url = API_MEDIA_INFO_URL.replace(
     "REFERENCE_ID",
     encodeURIComponent(reference_id)
-  );
+  ).replace("WITH_TRANSCRIPTION", String(with_transcription))
 
   const data = await fetch(request_url, {
     headers: {
@@ -26,7 +27,7 @@ export async function get_baheth_media_info(
     },
   })
     .then((response) => response.json())
-    .catch(() => {});
+    .catch(() => { });
 
   return data;
 }
@@ -45,7 +46,7 @@ export async function get_baheth_playlist_info(
     },
   })
     .then((response) => response.json())
-    .catch(() => {});
+    .catch(() => { });
 
   return data;
 }
