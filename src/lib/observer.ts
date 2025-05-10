@@ -4,8 +4,6 @@ export function init_location_observer(location_change_handler: () => void) {
   let observer = new MutationObserver(() => {
     const current_location = window.location.href;
 
-    console.log(last_location, current_location)
-
     if (last_location !== current_location) {
       location_change_handler();
 
