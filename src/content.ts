@@ -55,9 +55,11 @@ async function handle_baheth_content(
   // or if auto-redirect is enabled, redirect to baheth.
   if (settings.auto_redirect) {
     window.location.href = baheth_data.link;
-  } else {
-    show_toast(baheth_data.link, page_type);
+    return;
   }
+
+  // show a toast telling the user that the content is available on baheth
+  show_toast(baheth_data.link, page_type);
 
   // render transcription download button if possible
   if (
