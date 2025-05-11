@@ -1,4 +1,5 @@
 import prettyMilliseconds from 'pretty-ms'
+import { throttle } from 'throttle-debounce'
 
 export function render_transcription_view(transcription: unknown[]) {
     let transcription_view = document.createElement('div')
@@ -14,6 +15,8 @@ export function render_transcription_view(transcription: unknown[]) {
     let transcription_view_content = document.createElement('div')
     transcription_view_content.classList.add('baheth-transcription-view-content')
     transcription_view.appendChild(transcription_view_content)
+
+    let __transcription_items: HTMLDivElement[] = []
 
     for (let i = 0; i < transcription.length; i++) {
         let transcription_item_data = transcription[i] as any;
@@ -31,11 +34,25 @@ export function render_transcription_view(transcription: unknown[]) {
         `
 
         transcription_view_content.appendChild(transcription_item)
+        __transcription_items.push(transcription_item)
     }
 
+    let yt_secondary_panel = document.querySelector("#columns #secondary #panels")?.parentElement
+    yt_secondary_panel?.prepend(transcription_view)
+
     setTimeout(() => {
-        let yt_secondary_panel = document.querySelector("#columns #secondary #panels")?.parentElement
-        yt_secondary_panel?.prepend(transcription_view)
+        const yt = document.querySelector('ytd-page-manager ytd-watch-flexy .html5-video-player video')
+
+        yt?.addEventListener('timeupdate', throttle(1500, (ev) => {
+            let time = (ev.target as HTMLVideoElement).currentTime
+
+            let item_index = transcription.findIndex((t: any) => t.start_time <= time && t.end_time >= time);
+            let item = __transcription_items[item_index];
+
+            transcription_view_content.scrollTo({
+                top: item.offsetTop - transcription_view_content.offsetTop
+            })
+        }))
     }, 0);
 }
 

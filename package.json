@@ -10,7 +10,9 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chrome": "^0.0.313",
+    "@types/throttle-debounce": "^5.0.2",
     "pretty-ms": "^9.2.0",
+    "throttle-debounce": "^5.0.2",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
   }
