@@ -50,7 +50,8 @@ export function render_transcription_view(transcription: unknown[]) {
             let item = __transcription_items[item_index];
 
             transcription_view_content.scrollTo({
-                top: item.offsetTop - transcription_view_content.offsetTop
+                top: item.offsetTop - transcription_view_content.offsetTop,
+                behavior: "smooth"
             })
         }))
     }, 0);
