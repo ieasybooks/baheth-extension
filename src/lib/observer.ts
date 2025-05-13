@@ -11,6 +11,6 @@ export function init_location_observer(location_change_handler: () => void) {
     }
   });
 
-  // observe changes in the document body to detect location change
+  // observe changes in the document to detect location change
   observer.observe(document, { childList: true, subtree: true });
 }
