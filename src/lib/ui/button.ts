@@ -144,5 +144,5 @@ export async function render_button(
     } else {
       parent.appendChild(button_element);
     }
-  }, 500);
+  }, 0);
 }

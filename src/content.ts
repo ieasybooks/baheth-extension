@@ -10,6 +10,7 @@ import {
 } from "./lib/transcription";
 import { download_file } from "./lib/downloader";
 import { ensure_fonts_imported } from "./lib/fonts";
+import { delete_all_transcription_view, render_transcription_view } from "./lib/ui/transcription-view";
 
 async function handle_location_change() {
   // generating a clean youtube url (reference id)
@@ -20,10 +21,13 @@ async function handle_location_change() {
   const page_type = get_youtube_page_type(clean_url);
   if (page_type === "unknown") return;
 
+  // get extension settings
+  const settings = await get_settings();
+
   // get data for the given url
   const baheth_data =
     page_type === "video"
-      ? await get_baheth_media_info(clean_url)
+      ? await get_baheth_media_info(clean_url, settings.transcription_view)
       : await get_baheth_playlist_info(clean_url);
   if (!baheth_data?.link) return;
 
@@ -34,6 +38,9 @@ async function handle_location_change() {
 function cleanup() {
   // delete all toasts if any
   delete_all_toasts();
+
+  // delete all transcription views if any
+  delete_all_transcription_view()
 }
 
 // runs if the video/playlist is already on baheth
@@ -48,16 +55,21 @@ async function handle_baheth_content(
   // or if auto-redirect is enabled, redirect to baheth.
   if (settings.auto_redirect) {
     window.location.href = baheth_data.link;
-  } else {
-    show_toast(baheth_data.link, page_type);
+    return;
   }
+
+  // show a toast telling the user that the content is available on baheth
+  show_toast(baheth_data.link, page_type);
 
   // render transcription download button if possible
   if (
-    baheth_data?.transcription_txt_link ||
-    baheth_data?.transcription_pdf_link ||
-    baheth_data?.transcription_srt_link ||
-    baheth_data?.transcription_epub_link
+    page_type === 'video' &&
+    (
+      baheth_data?.transcription_txt_link ||
+      baheth_data?.transcription_pdf_link ||
+      baheth_data?.transcription_srt_link ||
+      baheth_data?.transcription_epub_link
+    )
   ) {
     let button = create_button("تحميل التفريغ", {
       className: "transcription-download-button",
@@ -75,6 +87,8 @@ async function handle_baheth_content(
     });
 
     render_button(button, "video-info");
+
+    render_transcription_view(baheth_data.transcription)
   }
 }
 

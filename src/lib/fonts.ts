@@ -26,5 +26,7 @@ export function ensure_fonts_imported() {
     ""
   );
 
-  document.head.appendChild(style);
+  window.addEventListener('load', () => {
+    document.head.appendChild(style);
+  })
 }
